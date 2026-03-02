@@ -21,7 +21,15 @@ if st.button(label="Scrape Site"):
         st.write(f"Scraping: {URL}...")
 
         # 2. The "Stealth" Header (Crucial for Reddit)
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
+        # A more complete "Human" header set
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.5',
+            'DNT': '1', # Do Not Track
+            'Connection': 'keep-alive',
+            'Upgrade-Insecure-Requests': '1',
+        }
         
         # 3. Fetch Data
         response = r.get(URL, headers=headers)
