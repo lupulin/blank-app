@@ -10,7 +10,7 @@ st.title('Web Scraper Example')
 URL = st.text_input(label="Enter URL", value="http://books.toscrape.com/")
 
 # Example Dictionary: Key is the 'Label', Value is the 'CSS Class'
-default_dict = "{'Title': 'h3', 'Price': 'price_color'}"
+default_dict = "{'Title': 'a', 'Price': 'price_color'}"
 ELEMENTS = st.text_area(label="Enter element dictionary (Target Classes)", value=default_dict)
 
 if st.button(label="Scrape Site"):
@@ -33,6 +33,7 @@ if st.button(label="Scrape Site"):
         
         # 3. Fetch Data
         response = r.get(URL, headers=headers, verify=False)
+        response.encoding = response.apparent_encoding
 
         if response.status_code == 200:
             soup = BeautifulSoup(response.text, 'html.parser')
@@ -40,9 +41,13 @@ if st.button(label="Scrape Site"):
 
             # 4. Parse based on your Dictionary
             for label, css_class in ELEMENT_DICT.items():
-                # Find all elements with that class and get their text
                 found_elements = soup.find_all(class_=css_class)
-                results[label] = [el.get_text() for el in found_elements]
+
+                # If it's an empty list, try finding by tag name instead of class
+                if not found_elements:
+                    found_elements = soup.find_all(css_class)
+
+                results[label] = [el.get_text(strip=True) for el in found_elements]
 
             # 5. Display as a Dataframe
             # We use try/except here in case the lists are different lengths
