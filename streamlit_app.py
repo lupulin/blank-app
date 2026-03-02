@@ -7,10 +7,10 @@ import ast
 st.title('Web Scraper Example')
 
 # 1. Inputs
-URL = st.text_input(label="Enter URL", value="https://old.reddit.com/r/learnpython/")
+URL = st.text_input(label="Enter URL", value="http://books.toscrape.com/")
 
 # Example Dictionary: Key is the 'Label', Value is the 'CSS Class'
-default_dict = "{'titles': 'title', 'users': 'author'}"
+default_dict = "{'Title': 'h3', 'Price': 'price_color'}"
 ELEMENTS = st.text_area(label="Enter element dictionary (Target Classes)", value=default_dict)
 
 if st.button(label="Scrape Site"):
