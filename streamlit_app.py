@@ -32,7 +32,7 @@ if st.button(label="Scrape Site"):
         }
         
         # 3. Fetch Data
-        response = r.get(URL, headers=headers)
+        response = r.get(URL, headers=headers, verify=False)
 
         if response.status_code == 200:
             soup = BeautifulSoup(response.text, 'html.parser')
